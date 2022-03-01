@@ -1,0 +1,60 @@
+1)
+CREATE DATABASE daily_scrum_database;
+
+2) 
+GRANT ALL ON daily_scrum_database.* TO 'theUserName'@'localhost' IDENTIFIED BY 'thePass';
+GRANT ALL ON daily_scrum_database.* TO 'theUserName'@'127.0.0.1' IDENTIFIED BY 'thePass';
+
+/////// ------------PDO.PHP------------- \\\\\\\
+(pdo.php)
+$pdo = new PDO('mysql:host=localhost;port=8889;dbname=daily_scrum_database', 'theUserName', 'thePass');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+/////// --------------------------------- \\\\\\\
+
+3)
+CREATE TABLE users (
+   user_id INTEGER NOT NULL
+     AUTO_INCREMENT KEY,
+   name VARCHAR(128),
+   email VARCHAR(128),
+   password VARCHAR(128),
+   INDEX(email)
+) ENGINE=InnoDB CHARSET=utf8;
+
+4)
+INSERT INTO users (name,email,password) VALUES ('test','test@theemail.com','   !!!!!MD5 HASHED THIS PASSOWORD!!!!    ');
+(Please md5 hashed password use above)
+
+5)
+CREATE TABLE daily_scrum_table (
+auto_id INT UNSIGNED NOT NULL AUTO_INCREMENT KEY,
+theName VARCHAR(128),
+theEmail VARCHAR(128),
+theDate VARCHAR(128),
+theWhatDidYouDoYesterday VARCHAR(128),
+theWhatWillYouDoToday VARCHAR(128),
+theIsThereAnyImpediment VARCHAR(128)
+);
+
+6)
+INSERT INTO daily_scrum_table (theName,theEmail, theDate,theWhatDidYouDoYesterday,theWhatWillYouDoToday,theIsThereAnyImpediment) VALUES ('Gursoy','test@mertkadirgursoy.com', '21.11.2021','Yesterday', 'Today', 'Impediment');
+
+/////// ------------DAILYSCRUM.PHP-------------- \\\\\\\
+(daily-scrum-form.php)
+$selectDailyNoteSqlQuery = "INSERT INTO daily_scrum_table (theName, theEmail, theDate, theWhatDidYouDoYesterday, theWhatWillYouDoToday, theIsThereAnyImpediment)      
+                                VALUES (:theName, :theEmail, :theDate, :theWhatDidYouDoYesterday, :theWhatWillYouDoToday, :theIsThereAnyImpediment)";          
+                        echo("<pre>\n".$selectDailyNoteSqlQuery."\n</pre>\n");
+                        $stmtDailyNotes = $pdo->prepare($selectDailyNoteSqlQuery);     
+                        $stmtDailyNotes->execute(array(
+                            ':theName' => $userData['name'],
+                            ':theEmail' => $_SESSION['email'],
+                            ':theDate' => date("d-m-Y"), /* $_POST['theDate'], */
+                            ':theWhatDidYouDoYesterday' => $_POST['theWhatDidYouDoYesterday'],
+                            ':theWhatWillYouDoToday' => $_POST['theWhatWillYouDoToday'],
+                            ':theIsThereAnyImpediment' => $_POST['theIsThereAnyImpediment']
+                        ));
+/////// ----------------------------------------- \\\\\\\
+
+
+(SQL COMMAND TO REVOKE PRIVILEGES)
+REVOKE ALL PRIVILEGES ON daily_scrum_database.* FROM 'theUser'@'localhost';
