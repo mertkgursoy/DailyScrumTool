@@ -1,2 +1,2 @@
 # dailyscrumtool
-Daily Scrum Tool - Pdo &amp; Crud
+Daily Scrum Tool - Pdo &amp; Crud Application
