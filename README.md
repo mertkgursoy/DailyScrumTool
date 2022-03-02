@@ -1,4 +1,4 @@
-# dailyscrumtool
+# Daily Scrum Tool
 Daily Scrum Tool| How to create a "CRUD App" with "Login & Register" system. | PHP & PDO & MySQL
 
 
