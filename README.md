@@ -2,7 +2,9 @@
 Daily Scrum Tool| How to create a "CRUD App" with "Login & Register" system. | PHP & PDO & MySQL
 
 
+
 DEMO: https://daily-scrum-tool.herokuapp.com/register.php
+
 
 
 To begin with, the crud applications are widely used and really useful for us to create our internal apps for our teams for free.
